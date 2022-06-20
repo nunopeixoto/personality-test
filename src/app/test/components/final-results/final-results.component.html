@@ -1,0 +1,7 @@
+<h2> You have finished your test.</h2>
+<p> Your final score was <strong> {{ introvertScore }} </strong> </p>
+<p>
+    Which means that you are a
+    <strong class="text-lg" *ngIf="introvertScore > 2"> Introvert</strong>
+    <strong class="text-lg" *ngIf="introvertScore <= 2"> Extrovert </strong>
+</p>

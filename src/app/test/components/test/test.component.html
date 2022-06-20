@@ -1,3 +1,26 @@
 <div class="flex justify-center items-center flex-col h-screen gap-8 bg-gray-100">
-  test works
+  <ng-container *ngIf="!showResults">
+    <ng-container *ngFor="let question of questions; let i = index">
+      <div class="bg-white mb-2 w-2/4 p-4" *ngIf="i===currentQuestion">
+          <h2> {{ question.question }} </h2>
+          <form [formGroup]="form">
+
+            <mat-radio-group class="vertical-group" formControlName="answer">
+              <mat-radio-button *ngFor="let answer of question.answers" value="{{answer.introvertScore}}">
+                {{ answer.answer }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </form>
+          <span *ngIf="requiredError" class="text-red-600"> Please select an answer. </span>
+          <button mat-flat-button color="primary" class="float-right pr-4" (click)="submit()">
+            <span *ngIf="questions.length === i + 1"> Finish test </span>
+            <span *ngIf="questions.length > i + 1"> Next </span>
+          </button>
+      </div>
+    </ng-container>
+  </ng-container>
+  <app-final-results
+    *ngIf="showResults"
+    [introvertScore]="introvertScore"
+  ></app-final-results>
 </div>
