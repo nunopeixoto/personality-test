@@ -1,27 +1,56 @@
-# PersonalityTest
+# Personality test challenge
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+## Overview
+The project is divided in two repositories:
+  - [personality-test-api](https://github.com/nunopeixoto/personality-test-api) Laravel 9 <br>
+  - [personality-test](https://github.com/nunopeixoto/personality-test) Angular 13 w/ Material and TailwindCSS
 
-## Development server
+## Project setup instructions
+#### Setup personality-test-api
+- Create a MySQL database (for example: personality_test)
+- Clone the repo and make the first-time setup
+```bash
+git clone https://github.com/nunopeixoto/personality-test-api.git
+cd personality-test-api
+composer i
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+cp .env.example .env
+# Make sure you properly fill DB_DATABASE, DB_USERNAME, DB_PASSWORD
+vi .env
 
-## Code scaffolding
+php artisan key:generate
+php artisan migrate
+php artisan db:seed --class="QuestionsSeeder"
+php artisan test
+php artisan serve
+```
+___
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Setup personality-test
+- If you don't have Angular CLI on your machine, be sure to add it as the first step: `npm install -g @angular/cli`
+- Clone the repo and make the first-time setup
+```bash
+git clone https://github.com/nunopeixoto/personality-test.git
+cd personality-test
+npm install
 
-## Build
+npm run start
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+___
 
-## Running unit tests
+## Notes and possible discussion about the assignment
+- For demonstration purposes, I developed a complete CRUD for the "Question" resource and respective tests. (The create, update and delete part can't be used via the UI)  
+- I didn't implement any sort of authentication
+- I didn't made a priority out of general error handling (for example if the API is down)
+- For simplicity, each questionare will only have 5 questions (and I assumed that at least 5 questions will always be in the database)
+- My algorithm to determine the personality trait is stricly binary (each answer only adds 0 or 1 to the score). A better solution would probably have a score between 0-5 for each answer
+- If you wish to test all of the endpoints available in the API [here is a collection that you can import on Postman/Insomnia](https://www.dropbox.com/s/ht90ox4ampl4ts8/Nuno%20Peixoto%20Personality%20Test.postman_collection?dl=0)
+___
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Taks covered
+- [x] Landing screen
+- [x] Start personality test
+- [x] Following
+- [x] Dynamic screen, that reads question and answers from a the backend (Just build CRUD, with in memory DB)
+- [x] Finish screen, where you can see your personality trait.
